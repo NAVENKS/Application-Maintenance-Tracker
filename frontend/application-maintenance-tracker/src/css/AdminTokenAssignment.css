@@ -1,0 +1,98 @@
+.assign-page {
+  padding: 24px;
+  background: #f5f7fb;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.card {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  margin-bottom: 14px;
+  color: #34495e;
+}
+
+/* Details */
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  font-size: 14px;
+}
+
+.description-box {
+  margin-top: 12px;
+  background: #f9fafc;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+/* Assignment */
+.assign-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: block;
+}
+
+select,
+textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #dcdde1;
+  font-size: 14px;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.comment-box {
+  margin-top: 14px;
+}
+
+.action-row {
+  margin-top: 16px;
+  text-align: right;
+}
+
+.assign-btn {
+  background: #3867d6;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.assign-btn:hover {
+  background: #274b9f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .details-grid,
+  .assign-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,80 @@
+.my-works-page {
+  padding: 24px;
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Empty */
+.empty-text {
+  font-style: italic;
+  color: #7f8c8d;
+}
+
+/* Work Card */
+.work-card {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+/* Header */
+.work-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.closed-badge {
+  background: #20bf6b;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+/* Info */
+.work-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Comments */
+.comment-section {
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.comment-section.admin {
+  background: #eef2ff;
+  border-left: 4px solid #3867d6;
+}
+
+.comment-section.developer {
+  background: #e8f6ff;
+  border-left: 4px solid #45aaf2;
+}
+
+.comment-section.tester {
+  background: #fff4e6;
+  border-left: 4px solid #f39c12;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .work-info {
+    grid-template-columns: 1fr;
+  }
+}

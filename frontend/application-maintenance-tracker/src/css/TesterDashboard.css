@@ -1,0 +1,73 @@
+.tester-dashboard {
+  padding: 24px;
+  background: #f5f7fb;
+}
+
+.tester-content {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  gap: 20px;
+}
+
+.tester-section {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.tester-section h3 {
+  margin-bottom: 12px;
+  color: #2c3e50;
+}
+
+.approve-btn {
+  background: #20bf6b;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.reject-btn {
+  background: #eb3b5a;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.approve-btn:hover {
+  background: #26de81;
+}
+
+.reject-btn:hover {
+  background: #c0392b;
+}
+
+.activity-section ul {
+  padding-left: 16px;
+}
+
+.activity-section li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #34495e;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .tester-content {
+    grid-template-columns: 1fr;
+  }
+}
+/* Align approve & reject buttons */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}

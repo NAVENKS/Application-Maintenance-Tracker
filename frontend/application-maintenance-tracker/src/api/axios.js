@@ -1,0 +1,28 @@
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: 'http://localhost:5000/api',
+  headers: { 'Content-Type': 'application/json' },
+});
+
+// Attach JWT from localStorage to every request
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('amt_token');
+  if (token) config.headers['Authorization'] = `Bearer ${token}`;
+  return config;
+});
+
+// Handle 401 globally (token expired)
+api.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    if (err.response?.status === 401) {
+      localStorage.removeItem('amt_token');
+      localStorage.removeItem('amt_user');
+      window.location.href = '/';
+    }
+    return Promise.reject(err);
+  }
+);
+
+export default api;
