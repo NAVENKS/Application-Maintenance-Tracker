@@ -1,3 +1,4 @@
+import '../src/css/globals.css'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './css/AdminDashboard.css';
@@ -58,7 +59,7 @@ const AdminDashboard = () => {
                 </thead>
                 <tbody>
                   {unassigned.length === 0 ? (
-                    <tr><td colSpan={5} style={{textAlign:'center',color:'#888'}}>No unassigned tokens</td></tr>
+                    <tr><td colSpan={5} className="empty-cell">No unassigned tokens</td></tr>
                   ) : unassigned.map(t => (
                     <tr key={t.token_id}>
                       <td>#{t.token_id}</td>

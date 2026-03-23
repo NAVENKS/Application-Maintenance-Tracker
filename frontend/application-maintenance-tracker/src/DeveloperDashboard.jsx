@@ -1,3 +1,4 @@
+import '../src/css/globals.css'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './css/DeveloperDashboard.css';

@@ -1,8 +1,10 @@
+import '../src/css/globals.css'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 import LoginPage         from './pages/LoginPage';
 import CreateToken       from './pages/CreateToken';
+import NotFound          from './pages/NotFound';
 import UserDashboard     from './UserDashboard';
 import AdminDashboard    from './AdminDashboard';
 import AdminAllRecords   from './AdminAllRecords';
@@ -85,8 +87,8 @@ function AppRoutes() {
         <ProtectedRoute roles={['TESTER']}><MyWorks /></ProtectedRoute>
       } />
 
-      {/* Fallback */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      {/* Fallback — 404 */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

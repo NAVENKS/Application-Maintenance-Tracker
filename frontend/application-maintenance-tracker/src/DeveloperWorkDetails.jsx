@@ -1,3 +1,4 @@
+import '../src/css/globals.css'
 import "./css/DeveloperWorkDetails.css";
 import AdminNavbar from "./AdminNavbar";
 import { workDetails } from "./data/developerWorkDetailsData";

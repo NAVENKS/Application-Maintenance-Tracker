@@ -1,7 +1,3 @@
--- Application Maintenance Tracker Database Schema
--- Run: psql -U postgres -d application_maintenance_tracker -f db_setup.sql
-
--- ─── ENUM TYPE FOR ROLES ──────────────────────────────────────────────────────
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'user_role') THEN
@@ -9,7 +5,7 @@ BEGIN
   END IF;
 END$$;
 
--- ─── USERS ────────────────────────────────────────────────────────────────────
+
 CREATE TABLE IF NOT EXISTS users (
   id          SERIAL PRIMARY KEY,
   name        VARCHAR(100) NOT NULL,
@@ -19,7 +15,6 @@ CREATE TABLE IF NOT EXISTS users (
   created_at  TIMESTAMP DEFAULT NOW()
 );
 
--- ─── TOKENS ──────────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS tokens (
   token_id         SERIAL PRIMARY KEY,
   title            VARCHAR(200) NOT NULL,
@@ -32,7 +27,6 @@ CREATE TABLE IF NOT EXISTS tokens (
   created_at       TIMESTAMP DEFAULT NOW()
 );
 
--- ─── TOKEN ASSIGNMENTS ────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS token_assignments (
   assignment_id  SERIAL PRIMARY KEY,
   token_id       INT NOT NULL UNIQUE REFERENCES tokens(token_id) ON DELETE CASCADE,
@@ -43,7 +37,7 @@ CREATE TABLE IF NOT EXISTS token_assignments (
   assigned_at    TIMESTAMP DEFAULT NOW()
 );
 
--- ─── TOKEN COMMENTS ──────────────────────────────────────────────────────────
+
 CREATE TABLE IF NOT EXISTS token_comments (
   comment_id  SERIAL PRIMARY KEY,
   token_id    INT NOT NULL REFERENCES tokens(token_id) ON DELETE CASCADE,
@@ -53,7 +47,6 @@ CREATE TABLE IF NOT EXISTS token_comments (
   created_at  TIMESTAMP DEFAULT NOW()
 );
 
--- ─── TOKEN STATUS HISTORY ─────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS token_status_history (
   history_id  SERIAL PRIMARY KEY,
   token_id    INT NOT NULL REFERENCES tokens(token_id) ON DELETE CASCADE,
@@ -63,7 +56,6 @@ CREATE TABLE IF NOT EXISTS token_status_history (
   changed_at  TIMESTAMP DEFAULT NOW()
 );
 
--- ─── INDEXES ──────────────────────────────────────────────────────────────────
 CREATE INDEX IF NOT EXISTS idx_tokens_created_by ON tokens(created_by);
 CREATE INDEX IF NOT EXISTS idx_tokens_status ON tokens(status);
 CREATE INDEX IF NOT EXISTS idx_token_assignments_developer ON token_assignments(developer_id);

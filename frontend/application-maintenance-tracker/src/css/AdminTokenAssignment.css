@@ -1,98 +1,178 @@
+/* ═══════════════════════════════════════════════════════════════
+   ADMIN TOKEN ASSIGNMENT
+   ═══════════════════════════════════════════════════════════════ */
+
 .assign-page {
-  padding: 24px;
-  background: #f5f7fb;
+  padding: 28px 32px;
+  min-height: 100vh;
+  background: var(--surface-page);
+  max-width: 960px;
+  margin: 0 auto;
 }
 
-.page-title {
-  font-size: 22px;
-  font-weight: 600;
+/* Cards on this page */
+.assign-page .card { margin-bottom: 20px; }
+
+/* Token info section — read-only display */
+.token-info-card {
+  background: linear-gradient(135deg, var(--brand-50) 0%, #f5f3ff 100%);
+  border: 1px solid var(--brand-100);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
   margin-bottom: 20px;
-  color: #2c3e50;
+  position: relative;
+  overflow: hidden;
 }
 
-.card {
-  background: #ffffff;
-  padding: 18px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+.token-info-card::after {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.token-info-card h3 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: var(--text-heading);
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--brand-200);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Assignment form */
+.assignment-form-card {
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-light);
   margin-bottom: 20px;
 }
 
-.card h3 {
-  margin-bottom: 14px;
-  color: #34495e;
+.assignment-form-card h3 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: var(--text-heading);
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Details */
-.details-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  font-size: 14px;
-}
-
-.description-box {
-  margin-top: 12px;
-  background: #f9fafc;
-  padding: 12px;
-  border-radius: 8px;
-}
-
-/* Assignment */
+/* Assign grid - side-by-side selects */
 .assign-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
 }
 
-label {
-  font-size: 13px;
-  font-weight: 500;
-  margin-bottom: 4px;
-  display: block;
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-select,
-textarea {
-  width: 100%;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #dcdde1;
-  font-size: 14px;
+.form-field label {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0;
 }
 
-textarea {
-  min-height: 80px;
-  resize: vertical;
+.form-field--full {
+  grid-column: 1 / -1;
 }
 
+/* Assignee select with avatar hint */
+.assignee-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Notes / comment area */
 .comment-box {
-  margin-top: 14px;
+  margin-top: 4px;
 }
 
+.comment-box textarea {
+  min-height: 100px;
+}
+
+/* Characters remaining */
+.field-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.field-meta__hint {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.field-meta__count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+/* Action row — right-aligned submit */
 .action-row {
-  margin-top: 16px;
-  text-align: right;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
 }
 
-.assign-btn {
-  background: #3867d6;
-  color: #ffffff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 14px;
+/* Cancel button (ghost) */
+.btn-cancel {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1.5px solid var(--border-default);
+  padding: 10px 24px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
   cursor: pointer;
+  transition: all var(--transition);
 }
 
-.assign-btn:hover {
-  background: #274b9f;
+.btn-cancel:hover {
+  border-color: var(--gray-400);
+  color: var(--text-primary);
+  background: var(--gray-50);
+}
+
+/* Assign button - full size for this page */
+.assign-page .assign-btn {
+  padding: 11px 32px;
+  font-size: var(--fs-base);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .details-grid,
-  .assign-grid {
-    grid-template-columns: 1fr;
-  }
+  .assign-page { padding: 16px; }
+  .assign-grid { grid-template-columns: 1fr; }
+  .token-info-card { padding: 20px; }
+  .details-grid { grid-template-columns: 1fr; }
+  .action-row { flex-direction: column; }
+  .btn-cancel, .assign-btn { width: 100%; justify-content: center; text-align: center; }
 }

@@ -1,3 +1,4 @@
+import '../src/css/globals.css'
 const TokenTable = ({ tokens }) => {
   return (
     <table style={styles.table}>

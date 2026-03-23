@@ -1,3 +1,4 @@
+import '../src/css/globals.css'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './css/UserDashboard.css';
@@ -47,11 +48,11 @@ const UserDashboard = () => {
 
         <div className="dashboard-content">
           <div className="tokens-section">
-            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom: '20px' }}>
               <h3>My Tokens</h3>
               <button
                 onClick={() => navigate('/user/create-token')}
-                style={{ padding:'8px 18px', background:'#1565c0', color:'#fff', border:'none', borderRadius:'8px', cursor:'pointer', fontWeight:600 }}
+                className="btn-primary"
               >
                 + New Token
               </button>

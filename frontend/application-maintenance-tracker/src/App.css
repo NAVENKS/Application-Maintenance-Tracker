@@ -1,0 +1,21 @@
+/* ══════════════════════════════════════════════════════════
+   APP CSS — Global App-Level Utilities
+   ══════════════════════════════════════════════════════════ */
+
+/* Smooth page transitions */
+#root {
+  min-height: 100vh;
+}
+
+/* Global link reset inside MUI components */
+a {
+  text-decoration: none;
+}
+
+/* Loading state */
+.loading-text {
+  text-align: center;
+  padding: var(--sp-2xl);
+  color: var(--text-muted);
+  font-size: var(--fs-md);
+}

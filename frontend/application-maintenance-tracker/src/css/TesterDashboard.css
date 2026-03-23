@@ -1,73 +1,103 @@
+/* ═══════════════════════════════════════════════════════════════
+   TESTER DASHBOARD
+   ═══════════════════════════════════════════════════════════════ */
+
 .tester-dashboard {
-  padding: 24px;
-  background: #f5f7fb;
+  padding: 28px 32px;
+  min-height: 100vh;
+  background: var(--surface-page);
 }
 
+/* Tester brand: purple/violet accent */
+.tester-dashboard .dashboard-title::after {
+  background: linear-gradient(90deg, var(--clr-purple), #c084fc);
+}
+
+/* Summary row */
+.tester-dashboard .summary-row {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Tester content */
 .tester-content {
   display: grid;
-  grid-template-columns: 2fr 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
 
-.tester-section {
-  background: #ffffff;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+/* Pending review section highlight */
+.tester-section--pending {
+  border-top: 3px solid var(--clr-purple);
 }
 
-.tester-section h3 {
-  margin-bottom: 12px;
-  color: #2c3e50;
+.tester-section--pending h3 {
+  color: var(--clr-purple-text);
 }
 
-.approve-btn {
-  background: #20bf6b;
-  color: #fff;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-right: 6px;
+/* Verdict row — approve + reject side by side */
+.verdict-cell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
-.reject-btn {
-  background: #eb3b5a;
-  color: #fff;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
+.verdict-cell .approve-btn,
+.verdict-cell .reject-btn {
+  padding: 5px 12px;
+  font-size: var(--fs-xs);
+  border-radius: var(--radius-sm);
 }
 
-.approve-btn:hover {
-  background: #26de81;
+/* Bug severity indicator */
+.severity-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
 }
 
-.reject-btn:hover {
-  background: #c0392b;
+.severity-chip--critical {
+  background: var(--clr-danger-bg);
+  color: var(--clr-danger-text);
 }
 
-.activity-section ul {
-  padding-left: 16px;
+.severity-chip--high {
+  background: var(--clr-warning-bg);
+  color: var(--clr-warning-text);
 }
 
-.activity-section li {
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: #34495e;
+.severity-chip--medium {
+  background: var(--clr-info-bg);
+  color: var(--clr-info-text);
+}
+
+.severity-chip--low {
+  background: var(--clr-success-bg);
+  color: var(--clr-success-text);
+}
+
+/* Tester notes / observations box */
+.observation-box {
+  padding: 14px 16px;
+  background: var(--clr-purple-bg);
+  border-left: 4px solid var(--clr-purple);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-body);
+  color: var(--text-body);
+  margin-top: 10px;
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .tester-content {
-    grid-template-columns: 1fr;
-  }
+  .tester-content { grid-template-columns: 1fr; }
+  .tester-dashboard .summary-row { grid-template-columns: repeat(2, 1fr); }
 }
-/* Align approve & reject buttons */
-.action-buttons {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
+
+@media (max-width: 640px) {
+  .tester-dashboard { padding: 16px; }
+  .tester-dashboard .summary-row { grid-template-columns: 1fr 1fr; }
 }

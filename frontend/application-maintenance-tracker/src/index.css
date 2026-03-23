@@ -1,0 +1,213 @@
+/* ══════════════════════════════════════════════════════════
+   DESIGN SYSTEM — Application Maintenance Tracker
+   Theme: Premium Indigo Light (v4)
+   Fonts: Outfit (Headings) · Plus Jakarta Sans (Body) · DM Mono (Data)
+   ══════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Accent (Rich Indigo) ── */
+  --clr-accent:          #4f46e5;
+  --clr-accent-hover:    #4338ca;
+  --clr-accent-light:    #eef2ff;
+  --clr-accent-muted:    #c7d2fe;
+  --clr-accent-glow:     rgba(79, 70, 229, 0.18);
+
+  /* ── Semantic Colors ── */
+  --clr-success:         #10b981;
+  --clr-success-bg:      #ecfdf5;
+  --clr-success-text:    #065f46;
+
+  --clr-warning:         #f59e0b;
+  --clr-warning-bg:      #fffbeb;
+  --clr-warning-text:    #92400e;
+
+  --clr-danger:          #ef4444;
+  --clr-danger-bg:       #fef2f2;
+  --clr-danger-text:     #991b1b;
+
+  --clr-info:            #0ea5e9;
+  --clr-info-bg:         #f0f9ff;
+  --clr-info-text:       #075985;
+
+  /* ── Surfaces ── */
+  --surface-page:        transparent;  /* body has gradient */
+  --surface-card:        #ffffff;
+  --surface-hover:       #f8faff;
+  --surface-input:       #f8fafc;
+  --surface-sidebar:     #ffffff;
+
+  /* ── Text ── */
+  --text-heading:        #0f172a;
+  --text-body:           #1e293b;
+  --text-secondary:      #475569;
+  --text-muted:          #64748b;
+  --text-inverse:        #ffffff;
+
+  /* ── Borders ── */
+  --border-light:        #e2e8f0;
+  --border-default:      #cbd5e1;
+  --border-accent:       #a5b4fc;
+
+  /* ── Typography ── */
+  --font-heading:    'Outfit', sans-serif;
+  --font-body:       'Plus Jakarta Sans', sans-serif;
+  --font-mono:       'DM Mono', monospace;
+
+  --fs-xs:    0.75rem;   /* 12px */
+  --fs-sm:    0.8125rem; /* 13px */
+  --fs-base:  1rem;      /* 16px */
+  --fs-md:    1.125rem;  /* 18px */
+  --fs-lg:    1.25rem;   /* 20px */
+  --fs-xl:    1.5rem;    /* 24px */
+  --fs-2xl:   1.875rem;  /* 30px */
+  --fs-3xl:   2.25rem;   /* 36px */
+  --fs-stat:  3rem;      /* 48px */
+
+  --fw-regular:   400;
+  --fw-medium:    500;
+  --fw-semibold:  600;
+  --fw-bold:      700;
+  --fw-extrabold: 800;
+
+  --lh-body:    1.65;
+  --lh-heading: 1.2;
+
+  /* ── Spacing (8px grid) ── */
+  --sp-1:   0.5rem;   /* 8px */
+  --sp-2:   1rem;     /* 16px */
+  --sp-3:   1.5rem;   /* 24px */
+  --sp-4:   2rem;     /* 32px */
+  --sp-5:   2.5rem;   /* 40px */
+  --sp-6:   3rem;     /* 48px */
+
+  /* ── Radii ── */
+  --radius-sm:   8px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-pill: 9999px;
+
+  /* ── Shadows (Indigo-tinted layered) ── */
+  --shadow-xs:  0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm:  0 2px 4px rgba(79,70,229,0.04), 0 4px 8px rgba(0,0,0,0.04);
+  --shadow-md:  0 4px 6px rgba(79,70,229,0.06), 0 10px 20px rgba(0,0,0,0.05);
+  --shadow-lg:  0 8px 16px rgba(79,70,229,0.08), 0 20px 40px rgba(0,0,0,0.07);
+  --shadow-xl:  0 20px 40px rgba(79,70,229,0.12), 0 40px 80px rgba(0,0,0,0.05);
+  --shadow-glow: 0 0 0 4px var(--clr-accent-glow);
+
+  /* ── Transitions ── */
+  --transition: 0.2s ease;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   GLOBAL RESET & BASE
+   ══════════════════════════════════════════════════════════ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  color: var(--text-body);
+  min-height: 100vh;
+
+  /* ── Premium Soft Indigo Gradient Background ── */
+  background-color: #edf0fe;
+  background-image:
+    radial-gradient(ellipse at 10%  10%,  rgba(99,102,241,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 90%  5%,   rgba(139,92,246,0.09) 0%, transparent 45%),
+    radial-gradient(ellipse at 50%  90%,  rgba(59,130,246,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 85%  80%,  rgba(79,70,229,0.06)  0%, transparent 40%),
+    linear-gradient(160deg, #f0f5ff 0%, #eef2fe 35%, #e8f0fe 65%, #f0eeff 100%);
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: var(--lh-heading);
+  color: var(--text-heading);
+  font-weight: var(--fw-bold);
+}
+
+a { color: var(--clr-accent); text-decoration: none; transition: color var(--transition); }
+a:hover { color: var(--clr-accent-hover); }
+
+::selection { background: var(--clr-accent); color: var(--text-inverse); }
+:focus-visible { outline: 2px solid var(--clr-accent); outline-offset: 2px; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: var(--clr-accent-muted); border-radius: var(--radius-pill); }
+::-webkit-scrollbar-thumb:hover { background: var(--clr-accent); }
+
+
+/* ══════════════════════════════════════════════════════════
+   MUI OVERRIDES — Light Sidebar & Topbar
+   ══════════════════════════════════════════════════════════ */
+
+/* Sidebar drawer background is white */
+.MuiDrawer-paper {
+  background-color: var(--surface-sidebar) !important;
+  border-right: 1px solid var(--border-light) !important;
+  box-shadow: 2px 0 12px rgba(79,70,229,0.06) !important;
+}
+
+/* Nav link text */
+.MuiListItemText-primary {
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-sm) !important;
+  font-weight: var(--fw-semibold) !important;
+  color: var(--text-secondary) !important;
+}
+
+/* Nav icons */
+.MuiListItemIcon-root {
+  color: var(--text-muted) !important;
+  transition: color var(--transition);
+}
+
+/* Nav list item button */
+.MuiListItemButton-root {
+  margin: 3px 10px !important;
+  border-radius: var(--radius-md) !important;
+  transition: all var(--transition) !important;
+}
+
+/* Nav hover */
+.MuiListItemButton-root:hover {
+  background-color: var(--clr-accent-light) !important;
+}
+.MuiListItemButton-root:hover .MuiListItemIcon-root,
+.MuiListItemButton-root:hover .MuiListItemText-primary {
+  color: var(--clr-accent) !important;
+}
+
+/* Divider in sidebar */
+.MuiDivider-root { border-color: var(--border-light) !important; }
+
+/* Sidebar expand/collapse icon */
+.MuiDrawer-paper .MuiIconButton-root { color: var(--text-muted) !important; }
+
+/* MUI Typography in Topbar */
+.MuiToolbar-root .MuiTypography-h6 {
+  font-family: var(--font-heading) !important;
+  font-size: 1.1rem !important;
+  font-weight: var(--fw-bold) !important;
+  color: var(--text-heading) !important;
+}
+
+.MuiToolbar-root .MuiTypography-body2 {
+  font-family: var(--font-body) !important;
+  color: var(--text-secondary) !important;
+  font-size: var(--fs-sm) !important;
+}
+
+/* Topbar menu icon */
+.MuiToolbar-root > .MuiIconButton-root {
+  color: var(--text-secondary) !important;
+}

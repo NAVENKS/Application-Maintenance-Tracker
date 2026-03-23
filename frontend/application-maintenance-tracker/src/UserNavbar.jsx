@@ -1,3 +1,4 @@
+import '../src/css/globals.css'
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -107,7 +108,7 @@ export default function UserNavbar({ children }) {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
 
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} elevation={0} sx={{ backgroundColor: '#ffffff', color: 'var(--text-heading)', borderBottom: '1px solid var(--border-light)', boxShadow: '0 1px 8px rgba(79,70,229,0.08)' }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -129,7 +130,7 @@ export default function UserNavbar({ children }) {
         </Toolbar>
       </AppBar>
 
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} sx={{ '& .MuiDrawer-paper': { backgroundColor: '#ffffff', borderRight: '1px solid var(--border-light)' } }}>
         <DrawerHeader>
           <IconButton onClick={() => setOpen(false)}>
             {theme.direction === "rtl" ? (

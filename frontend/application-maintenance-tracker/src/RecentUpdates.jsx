@@ -1,3 +1,4 @@
+import '../src/css/globals.css'
 const RecentUpdates = ({ updates }) => {
   return (
     <div style={styles.box}>

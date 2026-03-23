@@ -1,3 +1,4 @@
+import '../src/css/globals.css'
 import { useEffect, useState } from 'react';
 import { useAuth } from './context/AuthContext';
 import './css/MyWorks.css';

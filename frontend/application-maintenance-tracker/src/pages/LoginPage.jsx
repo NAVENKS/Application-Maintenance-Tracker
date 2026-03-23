@@ -1,3 +1,4 @@
+import '../css/globals.css';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import './LoginPage.css';

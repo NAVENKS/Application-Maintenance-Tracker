@@ -1,155 +1,147 @@
-/* ===== Root Dashboard ===== */
+/* ═══════════════════════════════════════════════════════════════
+   USER DASHBOARD
+   ═══════════════════════════════════════════════════════════════ */
+
 .user-dashboard {
-  padding: 24px;
-  background: #f5f7fb;
-  font-family: "Segoe UI", Tahoma, sans-serif;
+  padding: 28px 32px;
+  min-height: 100vh;
+  background: var(--surface-page);
 }
 
-/* ===== Title ===== */
-.dashboard-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 20px;
-}
-
-/* ===== Summary Cards ===== */
-.summary-row {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
+/* Welcome banner */
+.user-dashboard .welcome-banner {
+  background: linear-gradient(135deg, var(--accent-600) 0%, var(--brand-700) 40%, #7c3aed 100%);
+  border-radius: var(--radius-xl);
+  padding: 28px 32px;
   margin-bottom: 28px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(79,70,229,0.3);
 }
 
-/* Card color themes (applied inside SummaryCard) */
-.card-total {
-  background: linear-gradient(135deg, #4b7bec, #3867d6);
-  color: #fff;
+.user-dashboard .welcome-banner::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
 }
 
-.card-open {
-  background: linear-gradient(135deg, #f7b731, #f39c12);
-  color: #fff;
+.user-dashboard .welcome-banner::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; right: 80px;
+  width: 260px; height: 260px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 50%;
 }
 
-.card-progress {
-  background: linear-gradient(135deg, #45aaf2, #2d98da);
-  color: #fff;
+.welcome-banner__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 1;
 }
 
-.card-rejected {
-  background: linear-gradient(135deg, #eb3b5a, #c0392b);
-  color: #fff;
+.welcome-banner__sub {
+  font-size: var(--fs-sm);
+  opacity: 0.8;
+  position: relative;
+  z-index: 1;
 }
 
-.card-closed {
-  background: linear-gradient(135deg, #20bf6b, #26de81);
-  color: #fff;
+/* Summary row */
+.user-dashboard .summary-row {
+  grid-template-columns: repeat(4, 1fr);
 }
 
-/* ===== Main Layout ===== */
+/* Dashboard layout */
 .dashboard-content {
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 20px;
 }
 
-/* ===== Tokens Section ===== */
+/* Tokens section */
 .tokens-section {
-  background: #ffffff;
-  padding: 18px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  padding: 24px 28px;
 }
 
-.tokens-section h3 {
-  margin-bottom: 14px;
-  color: #34495e;
-}
-
-/* ===== Recent Updates ===== */
+/* Updates / notifications panel */
 .updates-section {
-  background: #ffffff;
-  padding: 18px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  padding: 22px;
 }
 
-.updates-section h4 {
-  margin-bottom: 12px;
-  color: #34495e;
+/* Notification item */
+.notification-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: color var(--transition);
 }
 
-/* ===== Table Styling ===== */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
+.notification-item:last-child { border-bottom: none; }
+
+.notification-item:hover { color: var(--clr-accent); }
+
+.notification-item__title {
+  font-weight: var(--fw-semibold);
+  color: var(--text-body);
+  font-size: var(--fs-sm);
 }
 
-th {
-  background: #f0f3f8;
-  color: #2c3e50;
-  padding: 10px;
-  text-align: left;
-  font-weight: 600;
+.notification-item:hover .notification-item__title { color: var(--clr-accent); }
+
+.notification-item__time {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
 }
 
-td {
-  padding: 10px;
-  border-bottom: 1px solid #ecf0f1;
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  color: var(--text-muted);
+  gap: 12px;
+  text-align: center;
 }
 
-tr:hover {
-  background: #f9fafc;
+.empty-state__icon {
+  font-size: 2.5rem;
+  opacity: 0.4;
 }
 
-/* ===== Status Badges ===== */
-.status {
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
-  display: inline-block;
+.empty-state__text {
+  font-size: var(--fs-base);
+  font-style: italic;
 }
 
-.status-open {
-  background: #ffeaa7;
-  color: #d35400;
+/* New token button */
+.user-dashboard .btn-primary {
+  padding: 10px 24px;
+  font-size: var(--fs-sm);
 }
 
-.status-progress {
-  background: #dff9fb;
-  color: #0984e3;
-}
-
-.status-rejected {
-  background: #fab1a0;
-  color: #c0392b;
-}
-
-.status-closed {
-  background: #d4f8e8;
-  color: #27ae60;
-}
-
-/* ===== Responsive ===== */
+/* Responsive */
 @media (max-width: 1024px) {
-  .summary-row {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .dashboard-content {
-    grid-template-columns: 1fr;
-  }
-}
-.summary-card {
-  padding: 18px;
-  border-radius: 14px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease;
+  .dashboard-content { grid-template-columns: 1fr; }
+  .user-dashboard .summary-row { grid-template-columns: repeat(2, 1fr); }
 }
 
-.summary-card:hover {
-  transform: translateY(-4px);
+@media (max-width: 640px) {
+  .user-dashboard { padding: 16px; }
+  .user-dashboard .summary-row { grid-template-columns: 1fr 1fr; }
+  .welcome-banner { padding: 20px; }
 }

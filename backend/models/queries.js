@@ -1,6 +1,6 @@
 const pool = require('../config/database');
 
-// ─── USER QUERIES ───────────────────────────────────────────────────────────
+
 
 const findUserByEmail = async (email) => {
   const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
@@ -15,7 +15,7 @@ const getUsersByRole = async (role) => {
   return result.rows;
 };
 
-// ─── TOKEN QUERIES ───────────────────────────────────────────────────────────
+
 
 const createToken = async (title, description, application_name, environment, created_by) => {
   const result = await pool.query(
@@ -116,10 +116,9 @@ const updateTokenPriority = async (tokenId, priority) => {
   );
 };
 
-// ─── ASSIGNMENT QUERIES ──────────────────────────────────────────────────────
+
 
 const assignToken = async (tokenId, developerId, testerId, assignedBy, adminComment) => {
-  // Upsert the assignment
   const existing = await pool.query(
     'SELECT * FROM token_assignments WHERE token_id = $1',
     [tokenId]
@@ -154,7 +153,7 @@ const getAssignment = async (tokenId) => {
   return result.rows[0];
 };
 
-// ─── DEVELOPER QUERIES ───────────────────────────────────────────────────────
+
 
 const getDeveloperTokens = async (developerId) => {
   const result = await pool.query(
@@ -189,7 +188,6 @@ const getClosedDeveloperTokens = async (developerId) => {
   return result.rows;
 };
 
-// ─── TESTER QUERIES ──────────────────────────────────────────────────────────
 
 const getTesterTokens = async (testerId) => {
   const result = await pool.query(
@@ -224,7 +222,6 @@ const getClosedTesterTokens = async (testerId) => {
   return result.rows;
 };
 
-// ─── COMMENT QUERIES ─────────────────────────────────────────────────────────
 
 const addComment = async (tokenId, userId, role, comment) => {
   const result = await pool.query(
@@ -247,7 +244,6 @@ const getCommentsByToken = async (tokenId) => {
   return result.rows;
 };
 
-// ─── STATUS HISTORY QUERIES ──────────────────────────────────────────────────
 
 const addHistory = async (tokenId, oldStatus, newStatus, changedBy) => {
   await pool.query(
@@ -257,7 +253,6 @@ const addHistory = async (tokenId, oldStatus, newStatus, changedBy) => {
   );
 };
 
-// ─── DASHBOARD AGGREGATES ────────────────────────────────────────────────────
 
 const getUserSummary = async (userId) => {
   const result = await pool.query(
