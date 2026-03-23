@@ -15,6 +15,8 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+
+
 const DEV_TESTER_EMAIL = process.env.DEV_TESTER_EMAIL || 'ksnaven123@gmail.com';
 
 // ── Generic send ────────────────────────────────────────────
@@ -24,6 +26,8 @@ const sendEmail = async (to, subject, html) => {
       console.warn('⚠️ RESEND_API_KEY not set — skipping email');
       return;
     }
+    // ✅ Initialize inside function so env vars are loaded
+    const resend = new Resend(process.env.RESEND_API_KEY);
     console.log(`📧 Attempting to send email to ${to}...`);
     await resend.emails.send({
       from: 'Application Maintenance Tracker <onboarding@resend.dev>',
