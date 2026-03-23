@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
-
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
 // ── Gmail SMTP Transporter ───────────────────────────────────
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -16,16 +17,16 @@ const transporter = nodemailer.createTransport({
 
 const DEV_TESTER_EMAIL = process.env.DEV_TESTER_EMAIL || 'ksnaven123@gmail.com';
 
-// ── Generic send (fire-and-forget, never crashes) ────────────
+// ── Generic send ────────────────────────────────────────────
 const sendEmail = async (to, subject, html) => {
   try {
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      console.warn('⚠️  EMAIL_USER / EMAIL_PASS not set — skipping email');
+    if (!process.env.RESEND_API_KEY) {
+      console.warn('⚠️ RESEND_API_KEY not set — skipping email');
       return;
     }
     console.log(`📧 Attempting to send email to ${to}...`);
-    await transporter.sendMail({
-      from: `"Application Maintenance Tracker" <${process.env.EMAIL_USER}>`,
+    await resend.emails.send({
+      from: 'Application Maintenance Tracker <onboarding@resend.dev>',
       to,
       subject,
       html,
@@ -33,7 +34,6 @@ const sendEmail = async (to, subject, html) => {
     console.log(`📧 Email sent to ${to}: ${subject}`);
   } catch (err) {
     console.error(`❌ Email failed to ${to}:`, err.message);
-    console.error(`❌ Full error:`, err);
   }
 };
 
