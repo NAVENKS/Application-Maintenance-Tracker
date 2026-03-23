@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
@@ -17,31 +16,16 @@ app.use(helmet());
 app.use(morgan('dev'));
 
 // ── CORS ─────────────────────────────────────────────────
-// ── CORS ─────────────────────────────────────────────────
-const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
-  .split(',')
-  .map(o => o.trim());
-
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    callback(new Error(`CORS: origin ${origin} not allowed`));
-  },
-  credentials: true,
-}));
-
-// ── Handle OPTIONS preflight requests ─────────────────────
-app.options('*', cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    callback(new Error(`CORS: origin ${origin} not allowed`));
-  },
-  credentials: true,
-}));
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://application-maintenance-tracker-3im4n8iwg.vercel.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 // ── Body parsing ─────────────────────────────────────────
 app.use(express.json());
@@ -63,7 +47,7 @@ const authLimiter = rateLimit({
   message: { error: 'Too many login attempts, please try again later.' },
 });
 
-// ── Root route ────────────────────────────────────────────  ✅ MOVED HERE
+// ── Root route ────────────────────────────────────────────
 app.get('/', (req, res) => {
   res.json({ message: 'Application Maintenance Tracker API is running!' });
 });
