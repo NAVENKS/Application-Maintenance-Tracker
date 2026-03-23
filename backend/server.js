@@ -13,14 +13,10 @@ const app = express();
 // ── Security headers ──────────────────────────────────────
 app.use(helmet());
 
-// ── Request logging (dev-friendly) ───────────────────────
+// ── Request logging ───────────────────────────────────────
 app.use(morgan('dev'));
 
-// ── CORS (supports multiple origins from env) ─────────────
-const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
-  .split(',')
-  .map(o => o.trim());
-
+// ── CORS ─────────────────────────────────────────────────
 app.use(cors({
   origin: '*',
   credentials: false,
@@ -31,7 +27,7 @@ app.use(express.json());
 
 // ── Global API rate limiter ───────────────────────────────
 const globalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 * 60 * 1000,
   max: 200,
   standardHeaders: true,
   legacyHeaders: false,
@@ -46,14 +42,19 @@ const authLimiter = rateLimit({
   message: { error: 'Too many login attempts, please try again later.' },
 });
 
-// ── Routes ────────────────────────────────────────────────
-app.use('/api/auth', authLimiter, authRoutes);
-app.use('/api/tokens', tokenRoutes);
+// ── Root route ────────────────────────────────────────────  ✅ MOVED HERE
+app.get('/', (req, res) => {
+  res.json({ message: 'Application Maintenance Tracker API is running!' });
+});
 
 // ── Health check ─────────────────────────────────────────
 app.get('/api/health', (req, res) =>
   res.json({ status: 'ok', timestamp: new Date().toISOString() })
 );
+
+// ── Routes ────────────────────────────────────────────────
+app.use('/api/auth', authLimiter, authRoutes);
+app.use('/api/tokens', tokenRoutes);
 
 // ── 404 handler ───────────────────────────────────────────
 app.use((req, res) => {
@@ -71,7 +72,6 @@ app.use((err, req, res, next) => {
 });
 
 // ── Start server ─────────────────────────────────────────
-// ✅ Must use process.env.PORT
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
