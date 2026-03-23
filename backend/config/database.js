@@ -1,23 +1,23 @@
-const { Pool } = require('pg');
 require('dotenv').config();
+const { Pool } = require('pg');
 
-// const pool = new Pool({
-//   host: process.env.DB_HOST,
-//   port: process.env.DB_PORT,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DB_NAME,
-// });
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
+  ssl: { rejectUnauthorized: false },
 });
 
-pool.connect((err) => {
+// ✅ This forces every connection to use public schema
+pool.on('connect', (client) => {
+  client.query('SET search_path TO public');
+});
+
+pool.connect((err, client, release) => {
   if (err) {
-    console.error('Database connection error:', err.message);
+    console.error('❌ Database connection failed:', err.message);
   } else {
-    console.log('Connected to PostgreSQL database');
+    client.query('SET search_path TO public');
+    console.log('✅ Database connected successfully to Neon!');
+    release();
   }
 });
 
