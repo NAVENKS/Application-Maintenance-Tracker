@@ -310,6 +310,22 @@ const getTesterSummary = async (testerId) => {
   return result.rows[0];
 };
 
+
+const getAdminEmail = async () => {
+  const result = await pool.query(
+    "SELECT email FROM users WHERE role = 'ADMIN' LIMIT 1"
+  );
+  return result.rows[0]?.email || null;
+};
+
+const getUserEmailById = async (userId) => {
+  const result = await pool.query(
+    'SELECT email FROM users WHERE id = $1',
+    [userId]
+  );
+  return result.rows[0]?.email || null;
+};
+
 module.exports = {
   findUserByEmail,
   getUsersByRole,
@@ -334,4 +350,6 @@ module.exports = {
   getAdminSummary,
   getDeveloperSummary,
   getTesterSummary,
+  getAdminEmail,
+  getUserEmailById,
 };

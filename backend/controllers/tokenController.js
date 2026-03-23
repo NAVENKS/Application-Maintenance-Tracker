@@ -20,7 +20,17 @@ const {
   getDeveloperSummary,
   getTesterSummary,
   getUsersByRole,
+  getAdminEmail,
+  getUserEmailById,
 } = require('../models/queries');
+
+const {
+  sendTokenCreatedEmail,
+  sendTokenAssignedEmail,
+  sendStatusUpdateEmail,
+  sendSentForTestingEmail,
+  sendTesterResultEmail,
+} = require('../utils/emailService');
 
 // ─── USER ────────────────────────────────────────────────────────────────────
 
@@ -32,6 +42,12 @@ const createNewToken = async (req, res) => {
     }
     const token = await createToken(title, description, application_name, environment, req.user.id);
     await addHistory(token.token_id, null, 'OPEN', req.user.id);
+
+    // 📧 Email admin about new token
+    getAdminEmail().then(adminEmail => {
+      if (adminEmail) sendTokenCreatedEmail(adminEmail, token, req.user.name || 'A user');
+    }).catch(err => console.error('Email lookup failed:', err.message));
+
     res.status(201).json({ message: 'Token created successfully', token });
   } catch (err) {
     console.error('Create token error:', err);
@@ -112,6 +128,19 @@ const adminAssignToken = async (req, res) => {
     const oldStatus = token.status;
     await updateTokenStatus(token_id, 'ASSIGNED');
     await addHistory(token_id, oldStatus, 'ASSIGNED', req.user.id);
+
+    // 📧 Email developer & tester about assignment
+    const updatedToken = await getTokenById(token_id);
+    sendTokenAssignedEmail(
+      updatedToken,
+      updatedToken.developer_name || 'Developer',
+      updatedToken.tester_name || 'Tester'
+    );
+
+    // 📧 Email user about status change
+    getUserEmailById(token.created_by).then(userEmail => {
+      if (userEmail) sendStatusUpdateEmail(userEmail, updatedToken, 'ASSIGNED');
+    }).catch(err => console.error('Email lookup failed:', err.message));
 
     res.json({ message: 'Token assigned successfully' });
   } catch (err) {
@@ -194,6 +223,11 @@ const developerUpdate = async (req, res) => {
     if (token.status === 'ASSIGNED' || token.status === 'REJECTED') {
       await updateTokenStatus(token_id, 'IN_PROGRESS');
       await addHistory(token_id, token.status, 'IN_PROGRESS', req.user.id);
+
+      // 📧 Email user about IN_PROGRESS status
+      getUserEmailById(token.created_by).then(userEmail => {
+        if (userEmail) sendStatusUpdateEmail(userEmail, token, 'IN_PROGRESS');
+      }).catch(err => console.error('Email lookup failed:', err.message));
     }
 
     res.json({ message: 'Developer update saved' });
@@ -229,6 +263,14 @@ const developerSendToTester = async (req, res) => {
     const oldStatus = token.status;
     await updateTokenStatus(token_id, 'SENT_FOR_TESTING');
     await addHistory(token_id, oldStatus, 'SENT_FOR_TESTING', req.user.id);
+
+    // 📧 Email tester that work is ready for testing
+    sendSentForTestingEmail(token);
+
+    // 📧 Email user about status change
+    getUserEmailById(token.created_by).then(userEmail => {
+      if (userEmail) sendStatusUpdateEmail(userEmail, token, 'SENT_FOR_TESTING');
+    }).catch(err => console.error('Email lookup failed:', err.message));
 
     res.json({ message: 'Token sent to tester' });
   } catch (err) {
@@ -267,6 +309,12 @@ const testerApprove = async (req, res) => {
     await updateTokenStatus(token_id, 'CLOSED');
     await addHistory(token_id, token.status, 'CLOSED', req.user.id);
 
+    // 📧 Email admin + user about approval
+    Promise.all([getAdminEmail(), getUserEmailById(token.created_by)])
+      .then(([adminEmail, userEmail]) => {
+        if (adminEmail || userEmail) sendTesterResultEmail(adminEmail, userEmail, token, 'CLOSED');
+      }).catch(err => console.error('Email lookup failed:', err.message));
+
     res.json({ message: 'Token approved and closed' });
   } catch (err) {
     console.error('Tester approve error:', err);
@@ -288,6 +336,12 @@ const testerReject = async (req, res) => {
 
     await updateTokenStatus(token_id, 'REJECTED');
     await addHistory(token_id, token.status, 'REJECTED', req.user.id);
+
+    // 📧 Email admin + user about rejection
+    Promise.all([getAdminEmail(), getUserEmailById(token.created_by)])
+      .then(([adminEmail, userEmail]) => {
+        if (adminEmail || userEmail) sendTesterResultEmail(adminEmail, userEmail, token, 'REJECTED');
+      }).catch(err => console.error('Email lookup failed:', err.message));
 
     res.json({ message: 'Token rejected and sent back to developer' });
   } catch (err) {
