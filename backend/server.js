@@ -77,8 +77,8 @@ app.use((err, req, res, next) => {
 });
 
 // ── Start server ─────────────────────────────────────────
+// ✅ Must use process.env.PORT
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`   Mode: ${process.env.NODE_ENV || 'development'}`);
 });
