@@ -3,12 +3,15 @@ const nodemailer = require('nodemailer');
 // ── Gmail SMTP Transporter ───────────────────────────────────
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
-  port: 465,
-  secure: true, // ✅ use SSL
+  port: 587,
+  secure: false, // ✅ TLS not SSL
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  tls: {
+    rejectUnauthorized: false
+  }
 });
 
 const DEV_TESTER_EMAIL = process.env.DEV_TESTER_EMAIL || 'ksnaven123@gmail.com';
@@ -20,6 +23,7 @@ const sendEmail = async (to, subject, html) => {
       console.warn('⚠️  EMAIL_USER / EMAIL_PASS not set — skipping email');
       return;
     }
+    console.log(`📧 Attempting to send email to ${to}...`);
     await transporter.sendMail({
       from: `"Application Maintenance Tracker" <${process.env.EMAIL_USER}>`,
       to,
@@ -29,6 +33,7 @@ const sendEmail = async (to, subject, html) => {
     console.log(`📧 Email sent to ${to}: ${subject}`);
   } catch (err) {
     console.error(`❌ Email failed to ${to}:`, err.message);
+    console.error(`❌ Full error:`, err);
   }
 };
 
@@ -90,7 +95,7 @@ const sendTokenAssignedEmail = (token, developerName, testerName) => {
   sendEmail(DEV_TESTER_EMAIL, subject, html);
 };
 
-// 3. Developer updates status (IN_PROGRESS) → notify User
+// 3. Developer updates status → notify User
 const sendStatusUpdateEmail = (userEmail, token, newStatus) => {
   const statusLabels = {
     'IN_PROGRESS': '🔧 In Progress',
@@ -109,7 +114,7 @@ const sendStatusUpdateEmail = (userEmail, token, newStatus) => {
   sendEmail(userEmail, subject, html);
 };
 
-// 4. Developer sends to tester (SENT_FOR_TESTING) → notify Tester
+// 4. Developer sends to tester → notify Tester
 const sendSentForTestingEmail = (token) => {
   const subject = `🧪 Ready for Testing — #${token.token_id}: ${token.title}`;
   const html = wrapHtml('Token Ready for Testing', `
@@ -132,9 +137,7 @@ const sendTesterResultEmail = (adminEmail, userEmail, token, result) => {
     ${!isApproved ? '<p>The token has been sent back to the developer for rework.</p>' : '<p>This token is now closed.</p>'}
     <p style="margin-top:16px">Log in to the dashboard to view full details.</p>
   `);
-  // Send to admin
   sendEmail(adminEmail, subject, html);
-  // Send to user (ticket creator)
   if (userEmail && userEmail !== adminEmail) {
     sendEmail(userEmail, subject, html);
   }
