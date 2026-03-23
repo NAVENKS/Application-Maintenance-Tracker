@@ -8,7 +8,7 @@ const authRoutes = require('./routes/authRoutes');
 const tokenRoutes = require('./routes/tokenRoutes');
 
 const app = express();
-
+app.set('trust proxy', 1); 
 // ── Security headers ──────────────────────────────────────
 app.use(helmet());
 
@@ -36,14 +36,15 @@ const globalLimiter = rateLimit({
   max: 200,
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { xForwardedForHeader: false }, // ✅ Fix for Railway
   message: { error: 'Too many requests, please try again later.' },
 });
-app.use('/api/', globalLimiter);
 
 // ── Stricter limiter for auth endpoints ───────────────────
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 20,
+  validate: { xForwardedForHeader: false }, // ✅ Fix for Railway
   message: { error: 'Too many login attempts, please try again later.' },
 });
 
